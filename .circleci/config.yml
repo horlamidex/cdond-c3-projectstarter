@@ -146,7 +146,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - image: circleci/aws-cli@2.0.3
+      - image: aws/aws-cli@2.0.3
     steps:
       - checkout
       - run:
@@ -177,7 +177,6 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
 
 #   configure-infrastructure:
