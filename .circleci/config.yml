@@ -195,7 +195,7 @@ jobs:
       - run:
           name: Install tar gzip
           command: |
-            yum install -y tar gzip
+            sudo apt install -y tar gzip
       - run:
           name: Install Ansible
           command: |
