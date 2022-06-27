@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.10.1
-  cimg: cimg/base:2022.03
 commands:
 
   destroy-environment:
