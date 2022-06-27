@@ -186,7 +186,6 @@ jobs:
   configure-infrastructure:
     docker:
       - image: amazon/aws-cli
-      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
@@ -198,7 +197,7 @@ jobs:
       - run:
           name: Install Ansible
           command: |
-            apk add --update ansible
+            python3 -m pip install --user ansible
       - run:
           name: Install aws cli
           command: |
