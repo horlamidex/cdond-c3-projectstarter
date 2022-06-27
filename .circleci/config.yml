@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.10.1
+  aws-cli: circleci/aws-cli@3.1.1
 commands:
 
   destroy-environment:
@@ -191,10 +192,6 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["b3:0c:74:72:38:0e:3b:0f:18:a8:a7:63:fd:e0:1d:30"]
       - run:
-          name: Install tar gzip
-          command: |
-            yum install -y tar gzip
-      - run:
           name: Install Ansible
           command: |
             apk add --update ansible
@@ -205,7 +202,7 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - attach_workspace:
           at: ~/workspace
-      - destroy-environment
+      # - destroy-environment
 
 #   run-migrations:
 #     docker:
