@@ -190,8 +190,6 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["b3:0c:74:72:38:0e:3b:0f:18:a8:a7:63:fd:e0:1d:30"]
-      - attach_workspace:
-          at: ~/workspace
       - run:
           name: Install tar gzip
           command: |
@@ -211,6 +209,8 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
+      - attach_workspace:
+          at: ~/workspace
       - destroy-environment
 
 #   run-migrations:
