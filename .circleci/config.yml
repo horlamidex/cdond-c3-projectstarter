@@ -51,6 +51,12 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - slack/notify:
+          mentions: '@Abraham_James_CDO'
+          event: fail
+      - slack/notify:
+          mentions: '@Abraham_James_CDO'
+          event: pass
 
   build-backend:
     docker:
@@ -68,6 +74,12 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - slack/notify:
+          mentions: '@Abraham_James_CDO'
+          event: fail
+      - slack/notify:
+          mentions: '@Abraham_James_CDO'
+          event: pass
 
   test-frontend:
     docker:
