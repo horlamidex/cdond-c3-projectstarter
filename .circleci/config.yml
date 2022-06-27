@@ -139,10 +139,9 @@ jobs:
       - run:
           name: Backend scan
           command: |
-            return 1
-            # cd backend
-            # npm install
-            # npm audit fix --audit-level=critical
+            cd backend
+            npm install
+            npm audit fix --audit-level=critical
 
 #   deploy-infrastructure:
 #     docker:
