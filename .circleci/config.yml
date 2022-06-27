@@ -101,21 +101,35 @@ jobs:
           paths: [backend/node_modules]
           key: backend-test
  
-#   scan-frontend:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       # Restore from cache
-#       # Your job code here
+  scan-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [scan-frontend]
+      # Your job code here
+      - run:
+          name: Frontend scan
+          command: |
+             cd frontend
+             npm install
+             npm audit fix --audit-level=critical
 
-#   scan-backend:
-#     docker:
-#       # Docker image here
-#     steps:
-#       # Checkout code from git
-#       # Restore from cache
-#       # Your job code here
+  scan-backend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [scan-backend]
+      # Your job code here
+      - run:
+          name: Backend scan
+          command: |
+            cd backend
+            npm install
+            npm audit fix --audit-level=critical
 
 #   deploy-infrastructure:
 #     docker:
