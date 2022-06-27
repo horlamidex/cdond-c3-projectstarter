@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.10.1
+  cimg: cimg/base:2022.03
 commands:
 
   destroy-environment:
@@ -185,6 +186,7 @@ jobs:
 
   configure-infrastructure:
     docker:
+      - image: python:3.7-alpine3.11
       - image: amazon/aws-cli
     steps:
       - checkout
