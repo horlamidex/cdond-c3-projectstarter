@@ -181,7 +181,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - .circleci/ansible/inventory.txt
+            - ~/inventory.txt
       - destroy-environment
 
   configure-infrastructure:
@@ -195,13 +195,13 @@ jobs:
           name: Install Ansible
           command: |
             apk add --update ansible
+      - attach_workspace:
+          at: ~/
       - run:
           name: Configure server
           command: |
-            cd .circleci/ansible
+            # cd .circleci/ansible
             ansible-playbook -i ~/inventory.txt configure-server.yml
-      - attach_workspace:
-          at: ~/
       # - destroy-environment
 
 #   run-migrations:
