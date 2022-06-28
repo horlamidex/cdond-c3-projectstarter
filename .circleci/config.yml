@@ -27,7 +27,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS = $(curl --insecure https://kvdb.io/9dMB3NRL8PPtxgVV4Azwqo/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            export SUCCESS = $(curl --insecure https://kvdb.io/9dMB3NRL8PPtxgVV4Azwqo/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==1 ));
             then
               cd ~/project/backend
@@ -241,7 +241,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli curl
+            pip install awscli
+            apk add --update --no-cache tar gzip nodejs npm curl
       - run:
           name: Get backend url
           command: |
