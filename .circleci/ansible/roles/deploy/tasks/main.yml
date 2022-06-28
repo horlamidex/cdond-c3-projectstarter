@@ -38,7 +38,7 @@
   become: true
   unarchive:
     src: files/artifact.tar.gz
-    dest: ~/web
+    dest: .
 
 - name: Executing node app
   become: true
