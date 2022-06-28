@@ -1,0 +1,48 @@
+---
+- name: "Update packages"
+  become: true
+  apt:
+    update_cache: yes
+
+- name: "upgrade packages"
+  become: true
+  apt:
+    upgrade: yes
+
+- name: remove unused dependencies
+  become: true
+  apt:
+    autoremove: yes
+
+- name: "install dependencies."
+  become: true
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "install pm2 package"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
+
+- name: "Creates directory"
+  file:
+    path: ~/web
+    state: directory
+
+- name: Extract backend files
+  become: true
+  unarchive:
+    src: files/artifact.tar.gz
+    dest: ~/web
+
+- name: Executing node app
+  become: true
+  shell: |
+    pm2 stop all
+    pm2 start npm -- start
+  
