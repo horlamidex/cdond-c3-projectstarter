@@ -181,7 +181,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - ~/inventory.txt
+            - inventory.txt
       - destroy-environment
 
   configure-infrastructure:
@@ -191,17 +191,17 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["b3:0c:74:72:38:0e:3b:0f:18:a8:a7:63:fd:e0:1d:30"]
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install Ansible
           command: |
             apk add --update ansible
-      - attach_workspace:
-          at: ~/
       - run:
           name: Configure server
           command: |
             # cd .circleci/ansible
-            ansible-playbook -i ~/inventory.txt configure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml
       # - destroy-environment
 
 #   run-migrations:
