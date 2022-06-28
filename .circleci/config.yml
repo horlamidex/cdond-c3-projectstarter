@@ -7,8 +7,8 @@ commands:
 
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      # Add parameter here
+    # parameters:
+    #   # Add parameter here
     steps:
       - run:
           name: Destroy environments
@@ -150,6 +150,10 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
           command: |
@@ -177,11 +181,6 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udapeople" \
             --output text >> ~/inventory.txt
-
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - .circleci/ansible/inventory.txt
       - destroy-environment
 
   configure-infrastructure:
@@ -191,6 +190,8 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["b3:0c:74:72:38:0e:3b:0f:18:a8:a7:63:fd:e0:1d:30"]
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install Ansible
           command: |
@@ -200,8 +201,6 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i ~/inventory.txt configure-server.yml
-      - attach_workspace:
-          at: ~/
       # - destroy-environment
 
 #   run-migrations:
