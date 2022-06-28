@@ -177,11 +177,11 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udapeople" \
             --output text >> ~/inventory.txt
-
-      - persist_to_workspace:
+            cat ~/inventory.txt
+        - persist_to_workspace:
           root: ~/
           paths:
-            - inventory.txt
+            - .circleci/ansible/inventory.txt
       - destroy-environment
 
   configure-infrastructure:
@@ -200,8 +200,8 @@ jobs:
       - run:
           name: Configure server
           command: |
-            # cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
+            cd .circleci/ansible
+            ansible-playbook -i ~/inventory.txt configure-server.yml
       # - destroy-environment
 
 #   run-migrations:
