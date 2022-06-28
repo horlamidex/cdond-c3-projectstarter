@@ -177,12 +177,12 @@ jobs:
             # aws ec2 describe-instances \
             # --query 'Reservations[*].Instances[*].PublicIpAddress' \                   
             # --filters "Name=tag:Project,Values=udapeople"
-            # --output text >> ./ansible/inventory.txt
+            # --output text >> inventory.txt
 
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - inventory.txt
       - destroy-environment
 
   configure-infrastructure:
@@ -202,7 +202,7 @@ jobs:
             cd .circleci/ansible
             ansible-playbook -i ~/inventory.txt configure-server.yml
       - attach_workspace:
-          at: ~/workspace
+          at: ~/
       # - destroy-environment
 
 #   run-migrations:
