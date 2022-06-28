@@ -150,10 +150,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - .circleci/ansible/inventory.txt
       - run:
           name: Install tar utility
           command: |
@@ -181,6 +177,10 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udapeople" \
             --output text >> ~/inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .circleci/ansible/inventory.txt
       - destroy-environment
 
   configure-infrastructure:
