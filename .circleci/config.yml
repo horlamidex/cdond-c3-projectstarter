@@ -387,10 +387,8 @@ jobs:
               list-stacks --query "StackSummaries[*].StackName" \
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
             echo Stack names: "${STACKS[@]}"
-      - run:
-          name: Remove old stacks and files
-          command: |
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+
+            if [[ "$OldWorkflowID" =~ "$CIRCLE_WORKFLOW_ID" ]]
             then
               echo "$OldWorkflowID" != "$WorkFlowID" deleting Old Stack
               aws s3 rm "s3://udapeople-$OldWorkflowID" --recursive
@@ -399,6 +397,12 @@ jobs:
             else
               echo "Nothing changes"
             fi
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   default:
